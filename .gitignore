@@ -57,3 +57,5 @@ secrets.json
 *.pfx
 *.key
 *.pem
+
+.claude/
