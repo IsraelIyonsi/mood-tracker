@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using MoodTracker.Api.Common.Constants;
 
-internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
+internal sealed partial class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
@@ -16,9 +16,9 @@ internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> log
 
         var correlationId = httpContext.Request.Headers[HttpHeaders.CorrelationId].FirstOrDefault();
 
-        logger.LogError(
+        LogUnhandledException(
+            logger,
             exception,
-            "Unhandled exception while processing {Method} {Path}. CorrelationId={CorrelationId}",
             httpContext.Request.Method,
             httpContext.Request.Path,
             correlationId);
@@ -30,4 +30,15 @@ internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> log
         await httpContext.Response.WriteAsJsonAsync(problem, cancellationToken);
         return true;
     }
+
+    [LoggerMessage(
+        EventId = 1000,
+        Level = LogLevel.Error,
+        Message = "Unhandled exception while processing {Method} {Path}. CorrelationId={CorrelationId}")]
+    private static partial void LogUnhandledException(
+        ILogger logger,
+        Exception exception,
+        string method,
+        string path,
+        string? correlationId);
 }
