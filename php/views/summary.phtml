@@ -1,0 +1,52 @@
+<?php /** @var array $entries */ ?>
+<?php /** @var array $counts */ ?>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mood Tracker — Summary</title>
+  <style>
+    body { font-family: 'JetBrains Mono', monospace; background: #F5F1E8; color: #0A0A0A; margin: 0; padding: 32px; }
+    h1 { text-transform: uppercase; letter-spacing: -0.02em; margin: 0 0 16px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 24px; }
+    th, td { text-align: left; padding: 12px 16px; border: 2px solid #0A0A0A; }
+    th { background: #0A0A0A; color: #F5F1E8; text-transform: uppercase; font-size: 11px; letter-spacing: 0.1em; }
+    .summary { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+    .pill { padding: 6px 12px; border: 2px solid #0A0A0A; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .empty { padding: 32px; border: 2px solid #0A0A0A; background: #fff; text-align: center; }
+  </style>
+</head>
+<body>
+  <h1>MOOD.LOG / SERVER-SIDE SUMMARY</h1>
+  <p>Read directly from the shared SQLite database via PHP + PDO.</p>
+
+  <?php if (count($entries) === 0): ?>
+    <div class="empty">No moods logged yet.</div>
+  <?php else: ?>
+    <div class="summary">
+      <?php foreach ($counts as $mood => $total): ?>
+        <span class="pill"><?= htmlspecialchars((string) $mood) ?>: <?= (int) $total ?></span>
+      <?php endforeach; ?>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Mood</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($entries as $entry): ?>
+          <tr>
+            <td><?= htmlspecialchars((string) $entry['LoggedAt']) ?></td>
+            <td><?= htmlspecialchars((string) $entry['Mood']) ?></td>
+            <td><?= htmlspecialchars((string) ($entry['Note'] ?? '')) ?></td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  <?php endif; ?>
+</body>
+</html>

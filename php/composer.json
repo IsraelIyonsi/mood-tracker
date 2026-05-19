@@ -1,0 +1,19 @@
+{
+  "name": "mood-tracker/php-summary",
+  "description": "Server-side HTML summary of mood entries from the shared SQLite database.",
+  "type": "project",
+  "require": {
+    "php": ">=8.3",
+    "slim/slim": "^4.14",
+    "slim/psr7": "^1.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "MoodTracker\\Php\\": "src/"
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "optimize-autoloader": true
+  }
+}
