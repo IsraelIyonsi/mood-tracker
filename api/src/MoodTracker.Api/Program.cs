@@ -11,6 +11,7 @@ using MoodTracker.Api.Common.Constants;
 using MoodTracker.Api.Common.Errors;
 using MoodTracker.Api.Common.Observability;
 using MoodTracker.Api.Common.Persistence;
+using MoodTracker.Api.Features.Moods;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -57,6 +58,7 @@ builder.Services.ConfigureHttpJsonOptions(jsonOptions =>
 });
 
 builder.Services.AddValidatorsFromAssemblyContaining<Program>(includeInternalTypes: true);
+builder.Services.AddMoodsModule();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
@@ -69,9 +71,9 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(CorsOptions.PolicyName, policy =>
     {
-        if (corsConfig?.AllowedOrigins.Count > 0)
+        if (corsConfig is { AllowedOrigins.Count: > 0 } cors)
         {
-            policy.WithOrigins([.. corsConfig.AllowedOrigins])
+            policy.WithOrigins([.. cors.AllowedOrigins])
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .WithExposedHeaders(HttpHeaders.CorrelationId);
@@ -111,6 +113,8 @@ app.MapHealthChecks(ApiRoutes.HealthLive, new HealthCheckOptions { Predicate = _
 app.MapHealthChecks(ApiRoutes.HealthReady, new HealthCheckOptions { Predicate = check => check.Tags.Contains("ready") });
 
 app.MapOpenApi(ApiRoutes.OpenApiSpec);
+
+app.MapMoodsModule();
 
 app.Run();
 

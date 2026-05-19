@@ -3,16 +3,25 @@ namespace MoodTracker.Api.Tests.Integration;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MoodTracker.Api.Common.Constants;
 using MoodTracker.Api.Common.Persistence;
+using MoodTracker.Api.Features.Moods;
 using MoodTracker.Api.Features.Moods.LogMood;
 
 public class LogMoodEndpointTests : IAsyncLifetime
 {
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true,
+        Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) },
+    };
+
     private SqliteConnection _connection = default!;
     private MoodApiFactory _factory = default!;
     private HttpClient _client = default!;
@@ -55,20 +64,30 @@ public class LogMoodEndpointTests : IAsyncLifetime
         var body = new { mood = "happy", note = "great day" };
 
         var response = await _client.PostAsJsonAsync(ApiRoutes.Moods, body);
-        var dto = await response.Content.ReadFromJsonAsync<LogMoodResponse>();
+        var dto = await response.Content.ReadFromJsonAsync<LogMoodResponse>(JsonOptions);
 
         dto.ShouldNotBeNull();
         dto!.Id.ShouldNotBe(Guid.Empty);
-        dto.Mood.ShouldBe(Features.Moods.Mood.Happy);
+        dto.Mood.ShouldBe(Mood.Happy);
         dto.Note.ShouldBe("great day");
         dto.LoggedAt.ShouldNotBe(default);
         dto.CreatedAt.ShouldNotBe(default);
     }
 
     [Fact]
-    public async Task Post_UnknownMood_Returns422_WithProblemDetails()
+    public async Task Post_UnknownMoodString_Returns400_AtDeserialization()
     {
         var body = new { mood = "rainbow" };
+
+        var response = await _client.PostAsJsonAsync(ApiRoutes.Moods, body);
+
+        response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
+    }
+
+    [Fact]
+    public async Task Post_OutOfRangeMoodInt_Returns422_AtValidator()
+    {
+        var body = new { mood = 999, note = "x" };
 
         var response = await _client.PostAsJsonAsync(ApiRoutes.Moods, body);
 
