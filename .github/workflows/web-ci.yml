@@ -48,8 +48,7 @@ jobs:
         run: npm run build
 
       - name: Bundle size check
-        run: |
-          echo "TODO: enforce <100kb gzip via size-limit"
+        run: npx size-limit
 
       - name: Upload test results
         uses: actions/upload-artifact@v4

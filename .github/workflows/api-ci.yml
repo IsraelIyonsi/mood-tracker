@@ -56,5 +56,4 @@ jobs:
           path: api/TestResults/
 
       - name: Coverage threshold check
-        run: |
-          echo "TODO: enforce 90% overall, 100% on domain/validators/handlers via reportgenerator"
+        run: dotnet tool restore && dotnet reportgenerator -reports:TestResults/**/coverage.cobertura.xml -targetdir:TestResults/coverage -reporttypes:"TextSummary;Cobertura"
