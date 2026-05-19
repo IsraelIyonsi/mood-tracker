@@ -1,8 +1,25 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ErrorBoundary } from '@/shared/errors/ErrorBoundary';
+import { MoodClientProvider } from '@/features/moods/data/MoodClientContext';
+import { MoodTrackerPage } from '@/features/moods/pages/MoodTrackerPage';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 export function App() {
   return (
-    <main className="mx-auto max-w-[1320px] px-lg py-md">
-      <h1 className="font-display text-4xl text-ink">Mood Tracker</h1>
-      <p className="text-ink-soft">Scaffold ready. Features land in Phase 6.</p>
-    </main>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <MoodClientProvider>
+          <MoodTrackerPage />
+        </MoodClientProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }

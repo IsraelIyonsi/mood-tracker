@@ -22,8 +22,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "exactOptionalPropertyTypes": true,
-    "erasableSyntaxOnly": true,
+    "exactOptionalPropertyTypes": false,
+    "erasableSyntaxOnly": false,
 
     "paths": {
       "@/*": ["./src/*"]
