@@ -23,11 +23,11 @@ namespace MoodTracker.Api.Common.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("CreatedAt")
+                        .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("LoggedAt")
-                        .HasColumnType("TEXT");
+                    b.Property<long>("LoggedAt")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Mood")
                         .IsRequired()
@@ -37,8 +37,8 @@ namespace MoodTracker.Api.Common.Persistence.Migrations
                     b.Property<string>("Note")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("TEXT");
+                    b.Property<long?>("UpdatedAt")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

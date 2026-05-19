@@ -18,9 +18,9 @@ namespace MoodTracker.Api.Common.Persistence.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Mood = table.Column<string>(type: "TEXT", maxLength: 16, nullable: false),
                     Note = table.Column<string>(type: "TEXT", nullable: true),
-                    LoggedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: true)
+                    LoggedAt = table.Column<long>(type: "INTEGER", nullable: false),
+                    CreatedAt = table.Column<long>(type: "INTEGER", nullable: false),
+                    UpdatedAt = table.Column<long>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
