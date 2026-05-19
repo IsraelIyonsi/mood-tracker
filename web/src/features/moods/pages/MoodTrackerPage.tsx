@@ -18,12 +18,11 @@ export function MoodTrackerPage() {
 
       <Headline hasSelection={selectedMood !== null} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-[7fr_1fr_5fr] gap-0 items-start">
-        <div className="lg:col-start-1">
+      <div className="grid grid-cols-1 gap-xl lg:grid-cols-[7fr_5fr] lg:gap-lg items-start">
+        <div className="min-w-0">
           <LogMoodForm mood={selectedMood} onMoodChange={setSelectedMood} />
         </div>
-        <div className="hidden lg:block" aria-hidden="true" />
-        <aside className="lg:col-start-3 lg:mt-xl">
+        <aside className="min-w-0 lg:mt-xl">
           <MoodTimeline entries={recent.data?.entries ?? []} isLoading={recent.isLoading} />
         </aside>
       </div>

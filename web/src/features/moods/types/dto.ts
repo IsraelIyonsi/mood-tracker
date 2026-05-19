@@ -9,10 +9,15 @@ export const LogMoodRequestSchema = z.object({
 });
 export type LogMoodRequest = z.infer<typeof LogMoodRequestSchema>;
 
+const NullableNote = z
+  .string()
+  .nullish()
+  .transform((value) => value ?? null);
+
 export const LogMoodResponseSchema = z.object({
   id: z.string().uuid(),
   mood: MoodSchema,
-  note: z.string().nullable(),
+  note: NullableNote,
   loggedAt: z.string().datetime({ offset: true }),
   createdAt: z.string().datetime({ offset: true }),
 });
@@ -21,7 +26,7 @@ export type LogMoodResponse = z.infer<typeof LogMoodResponseSchema>;
 export const MoodEntryViewSchema = z.object({
   id: z.string().uuid(),
   mood: MoodSchema,
-  note: z.string().nullable(),
+  note: NullableNote,
   loggedAt: z.string().datetime({ offset: true }),
 });
 export type MoodEntryView = z.infer<typeof MoodEntryViewSchema>;
