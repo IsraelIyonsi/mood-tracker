@@ -1,11 +1,13 @@
+import { useState } from 'react';
 import { Headline } from '../components/Headline/Headline';
 import { LogMoodForm } from '../components/LogMoodForm/LogMoodForm';
 import { MoodTimeline } from '../components/MoodTimeline/MoodTimeline';
 import { useRecentMoods } from '../data/useMoodRepository';
+import type { Mood } from '../types/mood';
 
 export function MoodTrackerPage() {
   const recent = useRecentMoods();
-  const hasSelection = false;
+  const [selectedMood, setSelectedMood] = useState<Mood | null>(null);
 
   return (
     <main className="mx-auto max-w-[1320px] px-lg py-md">
@@ -14,11 +16,11 @@ export function MoodTrackerPage() {
         <span className="font-bold">[ 7 / 7 ]</span>
       </header>
 
-      <Headline hasSelection={hasSelection} />
+      <Headline hasSelection={selectedMood !== null} />
 
       <div className="grid grid-cols-1 lg:grid-cols-[7fr_1fr_5fr] gap-0 items-start">
         <div className="lg:col-start-1">
-          <LogMoodForm />
+          <LogMoodForm mood={selectedMood} onMoodChange={setSelectedMood} />
         </div>
         <div className="hidden lg:block" aria-hidden="true" />
         <aside className="lg:col-start-3 lg:mt-xl">

@@ -2,11 +2,17 @@ import { UI } from '@/shared/constants/ui';
 import { MoodLimits } from '../../constants';
 import { Button } from '@/shared/design-system/components/Button';
 import { Textarea } from '@/shared/design-system/components/Textarea';
+import { type Mood } from '../../types/mood';
 import { MoodPicker } from '../MoodPicker/MoodPicker';
 import { useLogMoodForm } from './useLogMoodForm';
 
-export function LogMoodForm() {
-  const form = useLogMoodForm();
+type LogMoodFormProps = {
+  mood: Mood | null;
+  onMoodChange: (mood: Mood | null) => void;
+};
+
+export function LogMoodForm({ mood, onMoodChange }: LogMoodFormProps) {
+  const form = useLogMoodForm({ mood, onMoodChange });
 
   return (
     <form onSubmit={form.onSubmit} aria-busy={form.isSubmitting} noValidate className="flex flex-col gap-lg">

@@ -6,18 +6,24 @@ import { type Mood } from '../../types/mood';
 import { validateLogMoodRequest, type FormErrors } from '../../lib/validation';
 import { labelFor } from '../MoodPicker/moodHues';
 
-export function useLogMoodForm() {
+type UseLogMoodFormParams = {
+  mood: Mood | null;
+  onMoodChange: (mood: Mood | null) => void;
+};
+
+export function useLogMoodForm({ mood, onMoodChange }: UseLogMoodFormParams) {
   const logMood = useLogMood();
-  const [mood, setMood] = useState<Mood | null>(null);
   const [note, setNote] = useState('');
   const [errors, setErrors] = useState<FormErrors>({});
   const [feedback, setFeedback] = useState<string | null>(null);
 
+  const setMood = onMoodChange;
+
   const reset = useCallback(() => {
-    setMood(null);
+    onMoodChange(null);
     setNote('');
     setErrors({});
-  }, []);
+  }, [onMoodChange]);
 
   const onSubmit = useCallback(
     async (event: FormEvent<HTMLFormElement>) => {
