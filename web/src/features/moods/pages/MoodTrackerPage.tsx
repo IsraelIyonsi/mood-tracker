@@ -10,7 +10,7 @@ export function MoodTrackerPage() {
   const [selectedMood, setSelectedMood] = useState<Mood | null>(null);
 
   return (
-    <main className="mx-auto max-w-[1320px] px-lg py-md">
+    <main className="mx-auto max-w-[860px] px-lg py-md">
       <header className="flex justify-between items-end border-b-heavy border-ink pb-sm mb-xl font-mono text-[11px] uppercase tracking-wide">
         <span className="font-bold">MOOD.LOG / 2026-05-19 / TUE</span>
         <span className="font-bold">[ 7 / 7 ]</span>
@@ -18,14 +18,11 @@ export function MoodTrackerPage() {
 
       <Headline hasSelection={selectedMood !== null} />
 
-      <div className="grid grid-cols-1 gap-xl lg:grid-cols-[7fr_5fr] lg:gap-lg items-start">
-        <div className="min-w-0">
-          <LogMoodForm mood={selectedMood} onMoodChange={setSelectedMood} />
-        </div>
-        <aside className="min-w-0 lg:mt-xl">
-          <MoodTimeline entries={recent.data?.entries ?? []} isLoading={recent.isLoading} />
-        </aside>
-      </div>
+      <section className="mb-xl">
+        <LogMoodForm mood={selectedMood} onMoodChange={setSelectedMood} />
+      </section>
+
+      <MoodTimeline entries={recent.data?.entries ?? []} isLoading={recent.isLoading} />
     </main>
   );
 }

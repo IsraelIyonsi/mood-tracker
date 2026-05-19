@@ -19,16 +19,13 @@ export function MoodTimeline({ entries, isLoading, onCardActivate }: MoodTimelin
       </header>
 
       {isLoading ? (
-        <div className="font-mono text-xs text-ink-muted">Loading…</div>
+        <div className="font-mono text-xs text-ink-muted py-md">Loading…</div>
       ) : entries.length === 0 ? (
         <p className="font-display text-base text-ink-soft py-lg">{UI.Labels.EmptyTimeline}</p>
       ) : (
-        <ol
-          className="flex gap-sm overflow-x-auto pb-sm list-none m-0 p-0 scroll-smooth"
-          aria-label={UI.Aria.Timeline}
-        >
+        <ol className="flex flex-col gap-sm list-none m-0 p-0" aria-label={UI.Aria.Timeline}>
           {entries.map((entry) => (
-            <li key={entry.id} className="snap-start">
+            <li key={entry.id}>
               <TimelineCard entry={entry} {...(onCardActivate ? { onActivate: onCardActivate } : {})} />
             </li>
           ))}

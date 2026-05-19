@@ -8,19 +8,19 @@ import { MoodFace } from '../MoodFace/MoodFace';
 
 const SWELL_TRANSFORM: string[] = [
   'translate(0px, 0px)',
-  'translate(-8px, -8px)',
+  'translate(-6px, -6px)',
   'translate(2px, 2px)',
   'translate(0px, 0px)',
 ];
 
 const SWELL_SHADOW: string[] = [
   '0 0 0 0 transparent',
-  '14px 14px 0 0 var(--ink)',
+  '12px 12px 0 0 var(--ink)',
   '-2px -2px 0 0 var(--ink)',
   '0 0 0 0 transparent',
 ];
 
-const SWELL_TRANSITION = { duration: 0.6, ease: [0.65, 0, 0.35, 1] as const };
+const SWELL_TRANSITION = { duration: 0.55, ease: [0.65, 0, 0.35, 1] as const };
 
 type TimelineCardProps = {
   entry: MoodEntryView;
@@ -66,28 +66,32 @@ export function TimelineCard({ entry, onActivate }: TimelineCardProps) {
             },
           })}
       className={cn(
-        'border-thick border-ink p-md min-w-[200px] max-w-[200px]',
-        'flex flex-col gap-sm cursor-pointer outline-none',
+        'border-thick border-ink p-md w-full',
+        'flex gap-md items-start cursor-pointer outline-none',
         'transition-shadow duration-fast ease-snap',
-        'hover:shadow-slab-lg focus-visible:shadow-slab-lg'
+        'hover:shadow-slab focus-visible:shadow-slab'
       )}
     >
-      <header className="flex justify-between font-mono text-[10px] uppercase tracking-wide font-bold opacity-85">
-        <span>{vm.shortDate.split(' ')[0]}</span>
-        <span>{vm.relativeDate}</span>
-      </header>
       <div
-        className="bg-cream border-thick border-ink w-[72px] h-[72px] flex items-center justify-center self-start"
+        className="bg-cream border-thick border-ink w-[72px] h-[72px] shrink-0 flex items-center justify-center"
         style={{ color: 'var(--ink)' }}
       >
         <MoodFace mood={vm.mood} size={56} />
       </div>
-      <h3 className="font-display font-bold text-xl uppercase tracking-tight m-0" style={{ color: vm.textColor }}>
-        {vm.moodLabel}
-      </h3>
-      {vm.note && (
-        <p className="font-display text-sm leading-snug line-clamp-3 opacity-95">{vm.note}</p>
-      )}
+
+      <div className="flex flex-col gap-xs flex-1 min-w-0">
+        <header className="flex justify-between gap-md items-baseline">
+          <h3 className="font-display font-bold text-xl uppercase tracking-tight m-0">
+            {vm.moodLabel}
+          </h3>
+          <span className="font-mono text-[10px] uppercase tracking-wide font-bold opacity-85 shrink-0">
+            {vm.shortDate} · {vm.relativeDate}
+          </span>
+        </header>
+        {vm.note && (
+          <p className="font-display text-sm leading-snug m-0 opacity-95 break-words">{vm.note}</p>
+        )}
+      </div>
     </motion.article>
   );
 }
