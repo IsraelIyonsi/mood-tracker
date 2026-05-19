@@ -15,7 +15,7 @@ public class AuditInterceptorTests : IAsyncLifetime
     private MoodDbContext _db = default!;
     private FakeTimeProvider _clock = default!;
 
-    public async ValueTask InitializeAsync()
+    public async Task InitializeAsync()
     {
         _connection = new SqliteConnection("DataSource=:memory:");
         await _connection.OpenAsync();
@@ -31,7 +31,7 @@ public class AuditInterceptorTests : IAsyncLifetime
         await _db.Database.EnsureCreatedAsync();
     }
 
-    public async ValueTask DisposeAsync()
+    public async Task DisposeAsync()
     {
         await _db.DisposeAsync();
         await _connection.DisposeAsync();
@@ -43,7 +43,7 @@ public class AuditInterceptorTests : IAsyncLifetime
         var entry = new MoodEntry(Guid.CreateVersion7(), Mood.Happy, "test", Now);
         _db.MoodEntries.Add(entry);
 
-        await _db.SaveChangesAsync(TestContext.Current.CancellationToken);
+        await _db.SaveChangesAsync(CancellationToken.None);
 
         entry.CreatedAt.ShouldBe(Now);
     }
@@ -54,7 +54,7 @@ public class AuditInterceptorTests : IAsyncLifetime
         var entry = new MoodEntry(Guid.CreateVersion7(), Mood.Happy, "test", Now);
         _db.MoodEntries.Add(entry);
 
-        await _db.SaveChangesAsync(TestContext.Current.CancellationToken);
+        await _db.SaveChangesAsync(CancellationToken.None);
 
         entry.UpdatedAt.ShouldBeNull();
     }
@@ -64,11 +64,11 @@ public class AuditInterceptorTests : IAsyncLifetime
     {
         var entry = new MoodEntry(Guid.CreateVersion7(), Mood.Happy, "test", Now);
         _db.MoodEntries.Add(entry);
-        await _db.SaveChangesAsync(TestContext.Current.CancellationToken);
+        await _db.SaveChangesAsync(CancellationToken.None);
 
         _clock.Advance(TimeSpan.FromMinutes(5));
         _db.Entry(entry).State = EntityState.Modified;
-        await _db.SaveChangesAsync(TestContext.Current.CancellationToken);
+        await _db.SaveChangesAsync(CancellationToken.None);
 
         entry.UpdatedAt.ShouldBe(_clock.GetUtcNow());
     }
@@ -78,12 +78,12 @@ public class AuditInterceptorTests : IAsyncLifetime
     {
         var entry = new MoodEntry(Guid.CreateVersion7(), Mood.Happy, "test", Now);
         _db.MoodEntries.Add(entry);
-        await _db.SaveChangesAsync(TestContext.Current.CancellationToken);
+        await _db.SaveChangesAsync(CancellationToken.None);
         var originalCreated = entry.CreatedAt;
 
         _clock.Advance(TimeSpan.FromHours(2));
         _db.Entry(entry).State = EntityState.Modified;
-        await _db.SaveChangesAsync(TestContext.Current.CancellationToken);
+        await _db.SaveChangesAsync(CancellationToken.None);
 
         entry.CreatedAt.ShouldBe(originalCreated);
     }
@@ -95,7 +95,7 @@ public class AuditInterceptorTests : IAsyncLifetime
         var second = new MoodEntry(Guid.CreateVersion7(), Mood.Sad,   "b", Now);
         _db.MoodEntries.AddRange(first, second);
 
-        await _db.SaveChangesAsync(TestContext.Current.CancellationToken);
+        await _db.SaveChangesAsync(CancellationToken.None);
 
         first.CreatedAt.ShouldBe(Now);
         second.CreatedAt.ShouldBe(Now);
