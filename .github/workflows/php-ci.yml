@@ -1,0 +1,36 @@
+name: PHP CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'php/**'
+      - '.github/workflows/php-ci.yml'
+  pull_request:
+    paths:
+      - 'php/**'
+      - '.github/workflows/php-ci.yml'
+
+jobs:
+  lint:
+    name: Composer + syntax check
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./php
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+          tools: composer:v2
+
+      - name: Composer install
+        run: composer install --no-progress --no-interaction --prefer-dist
+
+      - name: Syntax lint all PHP files
+        run: find src public -name "*.php" -print0 | xargs -0 -n1 php -l
