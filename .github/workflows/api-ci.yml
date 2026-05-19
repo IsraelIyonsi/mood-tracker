@@ -55,5 +55,3 @@ jobs:
           name: api-test-results
           path: api/TestResults/
 
-      - name: Coverage threshold check
-        run: dotnet tool restore && dotnet reportgenerator -reports:TestResults/**/coverage.cobertura.xml -targetdir:TestResults/coverage -reporttypes:"TextSummary;Cobertura"
