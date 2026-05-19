@@ -1,0 +1,23 @@
+# Default: normalize line endings to LF on commit
+* text=auto eol=lf
+
+# Windows-specific files keep CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.db binary
+*.sqlite binary
+
+# Language detection — let GitHub categorize correctly
+api/**       linguist-language=C#
+web/**       linguist-language=TypeScript
+php/**       linguist-language=PHP
+*.md         linguist-documentation
