@@ -82,9 +82,9 @@ public class GetRecentMoodsEndpointTests : IAsyncLifetime
     [Fact]
     public async Task Get_OrdersByLoggedAtDescending()
     {
-        var oldest  = new DateTimeOffset(2026, 5, 17, 0, 0, 0, TimeSpan.Zero);
-        var middle  = new DateTimeOffset(2026, 5, 18, 0, 0, 0, TimeSpan.Zero);
-        var newest  = new DateTimeOffset(2026, 5, 19, 0, 0, 0, TimeSpan.Zero);
+        var oldest = new DateTimeOffset(2026, 5, 17, 0, 0, 0, TimeSpan.Zero);
+        var middle = new DateTimeOffset(2026, 5, 18, 0, 0, 0, TimeSpan.Zero);
+        var newest = new DateTimeOffset(2026, 5, 19, 0, 0, 0, TimeSpan.Zero);
         await SeedExplicitAsync(
             A.MoodEntry().WithMood(Mood.Happy).WithLoggedAt(oldest),
             A.MoodEntry().WithMood(Mood.Sad).WithLoggedAt(newest),

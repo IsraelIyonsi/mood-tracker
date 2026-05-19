@@ -91,8 +91,8 @@ public class AuditInterceptorTests : IAsyncLifetime
     [Fact]
     public async Task MultipleAdds_InSingleSaveChanges_GetSameCreatedAt()
     {
-        var first  = new MoodEntry(Guid.CreateVersion7(), Mood.Happy, "a", Now);
-        var second = new MoodEntry(Guid.CreateVersion7(), Mood.Sad,   "b", Now);
+        var first = new MoodEntry(Guid.CreateVersion7(), Mood.Happy, "a", Now);
+        var second = new MoodEntry(Guid.CreateVersion7(), Mood.Sad, "b", Now);
         _db.MoodEntries.AddRange(first, second);
 
         await _db.SaveChangesAsync(CancellationToken.None);
