@@ -28,27 +28,28 @@ See [`docs/adr/`](./docs/adr/) for the load-bearing decisions.
 
 ## Run
 
+Full local stack via Docker (API + Web + PHP share the SQLite volume):
+
 ```bash
-# Full local stack via Docker (API + Web + PHP all share the SQLite volume)
-docker-compose up
-
-# Or run each separately:
-
-# API
-cd api && dotnet run --project src/MoodTracker.Api
-
-# Web
-cd web && npm install && npm run dev
-
-# PHP summary page (local only)
-cd php && composer install && php -S localhost:8080 -t public
+docker compose up
 ```
+
+Or run each independently — see [`docs/runbook.md`](./docs/runbook.md).
 
 ## Live
 
-- Web: _(TBD — Vercel)_
-- API: _(TBD — Railway)_
-- PHP summary: local only — `docker-compose up` then `http://localhost:8080/summary`
+- Web: _(deploy via Vercel — see runbook)_
+- API: _(deploy via Railway — see runbook)_
+- PHP summary: local only — `docker compose up` then `http://localhost:8080/summary`
+
+## Tests
+
+```bash
+cd api && dotnet test       # 55+ tests: domain, validators, handlers, integration, architecture
+cd web && npm test          # SVG face snapshots + component + hook
+```
+
+CI runs all three pipelines on every push to `main`.
 
 ## Repo layout
 
@@ -56,8 +57,12 @@ cd php && composer install && php -S localhost:8080 -t public
 mood-tracker/
 ├── api/        # .NET 10 backend (src/ + tests/)
 ├── web/        # Vite + React frontend
-├── php/        # Slim micro-route
-├── docs/       # ADRs + architecture diagrams
+├── php/        # Slim micro-route (local-only)
+├── docs/
+│   ├── adr/                # architecture decision records
+│   ├── architecture.md     # system + sequence + data-flow diagrams
+│   ├── runbook.md          # local dev, deploy, rollback
+│   └── loom-script.md      # video walkthrough script
 └── docker-compose.yml
 ```
 
