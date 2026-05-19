@@ -1,0 +1,40 @@
+:root {
+  --mood-happy-500: #F59E0B;
+  --mood-happy-700: #B45309;
+  --mood-excited-500: #F43F5E;
+  --mood-excited-700: #BE123C;
+  --mood-neutral-500: #64748B;
+  --mood-neutral-700: #475569;
+  --mood-anxious-500: #8B5CF6;
+  --mood-anxious-700: #6D28D9;
+  --mood-sad-500: #3B82F6;
+  --mood-sad-700: #1D4ED8;
+
+  --bg-cream: #F5F1E8;
+  --bg-card: #FFFFFF;
+  --ink: #0A0A0A;
+  --ink-soft: #3F3F3F;
+  --ink-muted: #737373;
+
+  --accent-mood: var(--ink);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-cream: #0F0E0B;
+    --bg-card: #1A1816;
+    --ink: #F5F1E8;
+    --ink-soft: #C7C2B6;
+    --ink-muted: #888378;
+    --accent-mood: var(--ink);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
