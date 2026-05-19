@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MoodTracker.Api/MoodTracker.Api.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MoodTracker.Api.Tests/MoodTracker.Api.Tests.csproj" />
+  </Folder>
+</Solution>
