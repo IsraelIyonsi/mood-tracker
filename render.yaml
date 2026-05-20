@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: mood-tracker-api
+    runtime: docker
+    repo: https://github.com/IsraelIyonsi/mood-tracker
+    branch: main
+    rootDir: api
+    dockerfilePath: src/MoodTracker.Api/Dockerfile
+    dockerContext: .
+    plan: free
+    region: oregon
+    healthCheckPath: /health/live
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: Database__ApplyMigrationsOnStartup
+        value: "true"
+      - key: Database__ConnectionString
+        value: "Data Source=/tmp/mood.db;Cache=Shared;Pooling=True"
+      - key: Cors__AllowedOrigins__0
+        sync: false
