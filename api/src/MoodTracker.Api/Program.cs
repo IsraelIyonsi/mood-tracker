@@ -116,12 +116,17 @@ app.UseStatusCodePages();
 app.UseCors(CorsOptions.PolicyName);
 app.UseRateLimiter();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.MapHealthChecks(ApiRoutes.HealthLive, new HealthCheckOptions { Predicate = _ => false });
 app.MapHealthChecks(ApiRoutes.HealthReady, new HealthCheckOptions { Predicate = check => check.Tags.Contains("ready") });
 
 app.MapOpenApi(ApiRoutes.OpenApiSpec);
 
 app.MapMoodsModule();
+
+app.MapFallbackToFile("index.html");
 
 app.Run();
 

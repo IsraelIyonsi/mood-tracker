@@ -14,7 +14,6 @@ RUN dotnet publish src/MoodTracker.Api/MoodTracker.Api.csproj \
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS runtime
 WORKDIR /app
 
-RUN addgroup -S app && adduser -S app -G app -h /app
 USER app
 
 ENV ASPNETCORE_URLS=http://+:8080 \
@@ -28,5 +27,6 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=15s --retries=3 \
     CMD wget -qO- http://localhost:8080/health/live || exit 1
 
 COPY --from=build --chown=app:app /app/publish ./
+COPY --chown=app:app src/MoodTracker.Api/wwwroot ./wwwroot
 
 ENTRYPOINT ["dotnet", "MoodTracker.Api.dll"]
