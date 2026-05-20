@@ -6,7 +6,8 @@ RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoload
 
 FROM php:8.3-cli-alpine AS runtime
 
-RUN docker-php-ext-install pdo pdo_sqlite
+RUN apk add --no-cache sqlite-dev \
+ && docker-php-ext-install pdo pdo_sqlite
 
 WORKDIR /app
 COPY --from=composer /app/vendor ./vendor
