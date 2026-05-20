@@ -52,6 +52,7 @@ yarn-error.log*
 pnpm-debug.log*
 
 web/src/shared/api/schema.ts
+api/src/MoodTracker.Api/wwwroot/
 
 secrets.json
 *.pfx

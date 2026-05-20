@@ -40,7 +40,6 @@ Zod schemas validate inbound JSON at runtime; the generated types ensure compile
 - **Zero hand-mirroring.** No risk of forgetting to update the TS DTO when the C# DTO changes.
 - **Single source of truth.** The C# DTO is the spec. Everything downstream derives.
 - **Refactor safety.** Backend renames cascade to frontend compile errors at CI time.
-- **Reviewer signal.** Demonstrates cross-stack thinking — most candidates hand-write the TS types.
 
 ## Why not the alternatives
 

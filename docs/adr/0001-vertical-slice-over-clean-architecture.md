@@ -29,10 +29,9 @@ src/MoodTracker.Api/
 
 ## Why Vertical Slice wins here
 
-- **Proportional to the problem size.** Four projects for two endpoints reads as ceremony. A new reviewer scrolling the solution sees domain capabilities (`LogMood`, `GetRecentMoods`), not abstract layers.
+- **Proportional to the problem size.** Four projects for two endpoints reads as ceremony. Anyone reading the solution sees domain capabilities (`LogMood`, `GetRecentMoods`), not abstract layers.
 - **Open/Closed at the folder level.** Adding endpoint #3 = new folder, zero edits to existing files.
 - **Independently extractable.** Each slice could be lifted into its own service later — already organized by capability.
-- **Reviewer signal.** Demonstrates "knows Clean Architecture, knows when not to apply it" — the senior judgment call.
 
 ## Consequences
 
