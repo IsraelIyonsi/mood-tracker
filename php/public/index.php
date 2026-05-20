@@ -10,7 +10,7 @@ use Slim\Factory\AppFactory;
 
 $databasePath = getenv('MOOD_DB_PATH') ?: '/data/mood.db';
 
-$pdo = SqliteConnection::open($databasePath);
+$pdo = SqliteConnection::tryOpen($databasePath);
 
 $app = AppFactory::create();
 $app->addRoutingMiddleware();
