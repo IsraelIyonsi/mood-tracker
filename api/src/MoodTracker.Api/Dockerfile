@@ -20,9 +20,7 @@ USER app
 ENV ASPNETCORE_URLS=http://+:8080 \
     DOTNET_RUNNING_IN_CONTAINER=true \
     DOTNET_USE_POLLING_FILE_WATCHER=false \
-    Database__ConnectionString="Data Source=/data/mood.db;Cache=Shared;Pooling=True"
-
-VOLUME /data
+    Database__ConnectionString="Data Source=/tmp/mood.db;Cache=Shared;Pooling=True"
 
 EXPOSE 8080
 
