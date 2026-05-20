@@ -11,7 +11,7 @@ Built as a take-home for a senior .NET + React role.
 | API | .NET 10 · ASP.NET Core Minimal APIs · EF Core · SQLite · FluentValidation · Serilog · xUnit + WebApplicationFactory |
 | Web | Vite · React 18 · TypeScript (strict) · Tailwind v3 · Framer Motion · TanStack Query · Zod · React Hook Form · MSW · Vitest · Playwright |
 | PHP bonus | Slim 4 · PDO · SQLite (shared with API) |
-| Deploy | Vercel (web) · Railway (API + PHP local-only) |
+| Deploy | AWS EC2 (single-host serving SPA + API) · ECR image registry · PHP local-only |
 
 ## Architecture (TL;DR)
 
@@ -38,9 +38,18 @@ Or run each independently — see [`docs/runbook.md`](./docs/runbook.md).
 
 ## Live
 
-- Web: _(deploy via Vercel — see runbook)_
-- API: _(deploy via Railway — see runbook)_
-- PHP summary: local only — `docker compose up` then `http://localhost:8080/summary`
+**App + API:** http://18.201.252.61 (AWS EC2 t3.micro, single-origin host serving the React SPA and the .NET API)
+
+| Endpoint | Method | Purpose |
+|---|---|---|
+| `/` | GET | React SPA (Brutalist-soft UI) |
+| `/api/v1/moods` | POST | Log a mood entry |
+| `/api/v1/moods?take=7` | GET | Last 7 entries (max 30 via clamp) |
+| `/health/live` | GET | Liveness probe |
+| `/health/ready` | GET | Readiness (DB ping) |
+| `/openapi/v1.json` | GET | OpenAPI 3.1 spec |
+
+PHP summary page is local-only (`docker compose up php` then `http://localhost:8080/summary`).
 
 ## Tests
 
