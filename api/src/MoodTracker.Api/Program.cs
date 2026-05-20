@@ -15,6 +15,7 @@ using MoodTracker.Api.Features.Moods;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Bind to platform-injected PORT (Railway/Render/Fly inject this)
 var port = Environment.GetEnvironmentVariable("PORT");
 if (!string.IsNullOrWhiteSpace(port))
 {
