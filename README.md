@@ -11,7 +11,7 @@ A small, focused journaling app for tracking how you feel over time. Pick a mood
 | **App (React SPA + .NET API)** | http://18.201.252.61 |
 | **Server-rendered summary (PHP)** | http://18.201.252.61:8080/summary |
 | **OpenAPI 3.1 spec** | http://18.201.252.61/openapi/v1.json |
-| **Walkthrough video** | https://www.loom.com/share/193dfbdd288043feb521fbfa40463863 |
+| **Walkthrough video** | (https://www.loom.com/share/81f58a430b4542a2a8ac6bd1a801c907) |
 
 The React SPA is bundled into the .NET API's `wwwroot` so both serve from the same origin — no CORS, no mixed-content. PHP runs as a sidecar container reading the same SQLite database via a shared Docker volume.
 
